@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slash loading</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <style>
+        * {
+            font-size: 1vmin;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #17f700;
+            overflow: hidden;
+        }
+
+        .katana {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            width: 30rem;
+            height: auto;
+        }
+
+        .mask {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #171717;
+        }
+
+        .mask_up {
+            clip-path: polygon(0% 0%, 100% 0%, 0% 100%, 0% 100%);
+            transform-origin: left top;
+            transform: scale(1.01);
+        }
+
+        .mask_down {
+            clip-path: polygon(100% 100%, 100% 0%, 0% 100%, 0% 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mask mask_up"></div>
+    <svg class="katana" viewBox="0 0 68.49 760">
+        <path d="M26.03,760H0C20.47,552.92,26.96,357.12,21.24,185.46h0C19.06,119.86,15.09,57.81,9.44,0c7.79,6.36,14.78,13.62,
+                    20.84,21.6,4.54,43.21,8.12,88.85,10.69,136.61h0c9.52,176.77,5.29,382.63-14.94,601.79Z"
+            fill="#efefef" />
+        <path d="M68.49,384.66c0,117.73-5.36,244.02-16.6,375.34H26.03c20.23-219.16,24.46-425.02,14.94-601.78h0c-2.57-47.77-6.15-93.41-10.69-136.62,
+                    13.66,18.01,22.54,39.66,25.05,62.92,.08,.75,.16,1.5,.22,2.26,8.49,90.41,12.94,190.6,12.94,297.88Z"
+            fill="#bfbfbf" />
+    </svg>
+    <div class="mask mask_down"></div>
+</body>
+<script>
+    // JIEJOE produce
+    // b站主页：https://space.bilibili.com/3546390319860710
+    const loading = {
+        mask_up: document.querySelector(".mask_up"),
+        mask_down: document.querySelector(".mask_down"),
+        katana: document.querySelector(".katana"),
+        animater: null,
+        intro() {
+            this.animater = gsap.timeline({
+                onUpdate: () => {
+                    const rect = this.katana.getBoundingClientRect();
+                    let cutpoint_x = (rect.left + rect.width) / innerWidth * 100;
+                    let cutpoint_y = (rect.top + rect.height / 2) / innerHeight * 100;
+                    let mask_up_y = (rect.top + rect.height / 2) / innerHeight * 100 * 1.2;
+                    let mask_down_x = rect.left / innerWidth * 100;
+                    this.mask_up.style.clipPath = `polygon(0% 0%, 100% 0%, ${cutpoint_x}% ${cutpoint_y}%, 0% ${mask_up_y}%)`;
+                    this.mask_down.style.clipPath = `polygon(100% 100%, 100% 0%,${cutpoint_x}% ${cutpoint_y}%, ${mask_down_x}% 100%)`;
+                }
+            })
+                .to(this.katana, {
+                    y: () => -this.katana.getBoundingClientRect().height / 2,
+                    duration: 0.4,
+                    ease: "power4.out",
+                    delay: 1,
+                })
+                .to(this.katana, {
+                    y: () => -this.katana.getBoundingClientRect().height / 2 - innerHeight,
+                    x: () => innerWidth,
+                    duration: 4,
+                    ease: "power4.inout",
+                }, "<0.3")
+        }
+    };
+    loading.intro();
+    window.addEventListener("resize", () => {
+        if (loading.animater) loading.animater.invalidate();
+    })
+</script>
+
+</html>
