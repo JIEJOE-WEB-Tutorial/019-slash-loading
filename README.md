@@ -1,6 +1,6 @@
 # 19 - 斩切开屏效果
-<a href="https://www.bilibili.com/video/BV1rEQ1BbEmn">
-<img src="https://i0.hdslb.com/bfs/archive/3bd29f296611e492fb837452b735a4b7c24faeb0.jpg" width="70%">
+<a href="https://www.bilibili.com/video/BV1cCKZ6DEbu">
+<img src="https://i2.hdslb.com/bfs/archive/74297a2cbc0d441f65071eef45d840abe760dc58.jpg" width="70%">
 </a>
 
 **👆👆点击跳转: Bilibili📺教程视频链接**
